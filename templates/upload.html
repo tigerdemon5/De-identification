@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV 파일 처리</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #020202;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #020202;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #020202;
+        }
+
+        .field-group {
+            margin-bottom: 15px;
+        }
+
+        .add-button {
+            background-color: #020202;
+            margin-bottom: 20px;
+        }
+
+        .add-button:hover {
+            background-color: #020202;
+        }
+
+        .output-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        let fieldCount = 1;
+
+        function addField() {
+            fieldCount++;
+            const container = document.getElementById('field-container');
+
+            const div = document.createElement('div');
+            div.setAttribute('id', `field-group-${fieldCount}`);
+            div.setAttribute('class', 'field-group');
+
+            const fieldNameLabel = document.createElement('label');
+            fieldNameLabel.textContent = '필드명: ';
+            div.appendChild(fieldNameLabel);
+
+            const fieldNameInput = document.createElement('input');
+            fieldNameInput.setAttribute('type', 'text');
+            fieldNameInput.setAttribute('name', `additional_field_name_${fieldCount}`);
+            div.appendChild(fieldNameInput);
+
+            const operationLabel = document.createElement('label');
+            operationLabel.textContent = '작업 선택: ';
+            div.appendChild(operationLabel);
+
+            const operationSelect = document.createElement('select');
+            operationSelect.setAttribute('name', `additional_operation_${fieldCount}`);
+            operationSelect.innerHTML = `
+                <option value="mask">마스킹</option>
+                <option value="hash">암호화</option>
+                <option value="delete">삭제</option>
+            `;
+            div.appendChild(operationSelect);
+
+            container.appendChild(div);
+        }
+    </script>
+</head>
+<body>
+    <h1>CSV 파일 처리</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label>{{ form.file.label_tag }}</label>
+            {{ form.file }}
+        </div>
+        <div>
+            <label>{{ form.field_name.label_tag }}</label>
+            {{ form.field_name }}
+        </div>
+        <div>
+            <label>{{ form.operation.label_tag }}</label>
+            {{ form.operation }}
+        </div>
+
+        <!-- 추가 필드를 위한 컨테이너 -->
+        <div id="field-container"></div>
+        <button type="button" class="add-button" onclick="addField()">+ 추가 필드</button>
+
+        <div class="output-container">
+            <label>{{ form.output_file_name.label_tag }}</label>
+            {{ form.output_file_name }}
+        </div>
+
+        <button type="submit">업로드</button>
+    </form>
+</body>
+</html>

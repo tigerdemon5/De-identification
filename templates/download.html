@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>파일 다운로드</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 24px;
+            color: #020202;
+        }
+
+        p {
+            text-align: center;
+            margin: 20px;
+            font-size: 16px;
+        }
+
+        a {
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+            text-decoration: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #020202;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #020202;
+        }
+    </style>
+</head>
+<body>
+    <h1>파일 처리가 완료되었습니다</h1>
+    <p>아래 버튼을 눌러 파일을 다운로드하세요:</p>
+    <a href="{{ file_url }}" download>
+        <button type="button">다운로드</button>
+    </a>
+</body>
+</html>
